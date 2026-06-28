@@ -15,8 +15,8 @@ public class PlaylistOOP {
 
         Scanner input = new Scanner(System.in);
 
-        // Array untuk menyimpan kumpulan objek Lagu (maksimal 100 lagu)
-        Lagu[] playlist = new Lagu[100];
+        // Array untuk menyimpan kumpulan objek Lagu (maksimal 10 lagu)
+        Lagu[] playlist = new Lagu[10];
         int jumlahLagu = 0;
 
         // Deklarasi objek role
@@ -45,16 +45,32 @@ public class PlaylistOOP {
 
                     do {
                         System.out.println("\n=== MENU ADMIN ===");
-                        System.out.println("1. Tambah Lagu");
+                        System.out.println("1. Tampilkan Semua Lagu");
+                        System.out.println("2. Tambah Lagu");
+                        System.out.println("3. Hapus Lagu Berdasarkan Judul");
+                        System.out.println("4. Urutkan Lagu Berdasarkan Durasi");
                         System.out.println("0. Kembali ke Menu Utama");
                         System.out.print("Pilihan : ");
                         adminMenu = input.nextInt();
                         input.nextLine();
 
-                        if (adminMenu == 1) {
-                            jumlahLagu = admin.tambahLagu(playlist, jumlahLagu, input);
-                        } else if (adminMenu != 0) {
-                            System.out.println("Menu tidak tersedia.");
+                        switch (adminMenu) {
+                            case 1:
+                                admin.tampilkanSemuaLagu(playlist, jumlahLagu);
+                                break;
+                            case 2:
+                                jumlahLagu = admin.tambahLagu(playlist, jumlahLagu, input);
+                                break;
+                            case 3:
+                                jumlahLagu = admin.hapusLagu(playlist, jumlahLagu, input);
+                                break;
+                            case 4:
+                                admin.urutkanLaguBerdasarkanDurasi(playlist, jumlahLagu);
+                                break;
+                            case 0:
+                                break;
+                            default:
+                                System.out.println("Menu tidak tersedia.");
                         }
                     } while (adminMenu != 0);
                     break;
