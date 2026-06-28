@@ -27,7 +27,8 @@ public class PlaylistArray {
             System.out.println("2. Tambah lagu baru");
             System.out.println("3. Hapus lagu berdasarkan judul");
             System.out.println("4. Cari lagu berdasarkan judul");
-            System.out.println("5. Keluar");
+            System.out.println("5. Urutkan berdasarkan durasi"); 
+            System.out.println("6. Keluar");
             System.out.print("Pilihan : ");
 
             menu = input.nextInt();
@@ -47,12 +48,15 @@ public class PlaylistArray {
                     cariLagu(input);
                     break;
                 case 5:
+                    urutkanLaguBerdasarkanDurasi();
+                    break;
+                case 6:
                     System.out.println("Terima kasih telah menggunakan sistem ini.");
                     break;
                 default:
                     System.out.println("Pilihan tidak valid.");
             }
-        } while (menu != 5);
+        } while (menu != 6);
 
         input.close();
     }
@@ -172,5 +176,36 @@ public class PlaylistArray {
         if (!ditemukan) {
             System.out.println("Maaf, lagu dengan judul '" + judulDicari + "' tidak ditemukan.");
         }
+    }
+
+    // Method mengurutkan lagu berdasarkan durasi secara ascending (Bubble Sort)
+    static void urutkanLaguBerdasarkanDurasi() {
+        System.out.println("\n=== Urutkan Lagu Berdasarkan Durasi ===");
+
+        // Cek apakah playlist kosong
+        if (jumlahLagu == 0) {
+            System.out.println("Playlist masih kosong, tidak ada yang bisa diurutkan.");
+            return;
+        }
+
+        // Tampilkan kondisi SEBELUM diurutkan
+        System.out.println("\n--- SEBELUM diurutkan ---");
+        tampilkanSemuaLagu();
+
+        // Proses Bubble Sort
+        for (int i = 0; i < jumlahLagu - 1; i++) {
+            for (int j = 0; j < jumlahLagu - 1 - i; j++) {
+                // Tukar posisi jika durasi kiri lebih besar dari kanan
+                if (playlist[j].getDurasi() > playlist[j + 1].getDurasi()) {
+                    Lagu temp = playlist[j];          // simpan lagu kiri di penampung sementara
+                    playlist[j] = playlist[j + 1];    // pindahkan lagu kanan ke kiri
+                    playlist[j + 1] = temp;           // pindahkan lagu simpanan ke kanan
+                }
+            }
+        }
+
+        // Tampilkan kondisi SESUDAH diurutkan
+        System.out.println("\n--- SESUDAH diurutkan (durasi ascending) ---");
+        tampilkanSemuaLagu();
     }
 }
